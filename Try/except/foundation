@@ -1,0 +1,27 @@
+events_list = [{'currency': 'USD', 'event': 'Non-Farm Payrolls', 'forecast': '175K','impact': 'High'},
+               {'currency': 'USD', 'event': 'U.S. Unemployment Rates', 'forecast': '4.5%','impact': 'High'},
+               {'currency': 'GBP', 'event': 'Purchasing Managers Index', 'forecast': '50.2','impact': 'Low'},
+               {'currency': 'GBP', 'event': 'U.K. Unemployment Rates', 'forecast': '5%','impact': 'Medium'},
+               {'currency': 'EUR', 'event': 'Euro Consumer Price Index', 'forecast': '48.2','impact': 'High'},
+               {'currency': 'EUR', 'event': 'E.U. Unemployment Rates', 'forecast': '4%','impact': 'Medium'}]
+
+def filter_events(events_list, currency):
+	matching = [] # A list is needed because return only returns one thing. With just return event I only get back one dictionary.
+	for event in events_list:
+		if currency in event['currency']:
+			matching.append(event)
+	return matching
+
+def display_events(matching):
+	for match in matching:
+		print(f'Events: {match["event"]}')
+		try:
+			forecast = float(match["forecast"]) # If float() succeeds → forecast holds a number like 50.2
+		except ValueError:
+			forecast = match['forecast'] # If float() fails → forecast holds the raw string like "175K"
+		print(f'Forecast: {forecast}')
+		print(f'Impact: {match["impact"]}')
+
+currency = input('Which currency you want to filter by: ').upper()
+filtered_list = filter_events(events_list, currency)
+display_events(filtered_list)
